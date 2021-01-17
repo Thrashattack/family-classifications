@@ -1,0 +1,18 @@
+version: '3.6'
+
+networks:
+  classificator-network:
+    driver: bridge
+
+services:
+  classificator-api:
+    build: .
+    volumes:
+      - .:/home/node/api
+   
+    networks:
+      - classificator-network
+    container_name: classificator-api
+    command: yarn dev
+    ports:
+      - 8080:8080
