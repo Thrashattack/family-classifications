@@ -1,32 +1,30 @@
-import { Contempled, Score } from '@shared/@types/types';
-import Service from '@shared/core/Service';
+import { Score, Family, Classified } from '@shared/@types/types';
+
+import IService from '@shared/core/IService';
+
+import MapFamilyToScoreService from './MapFamilyToScoreService';
+import MapScoreToClassifiedService from './MapScoreToClassifiedService';
 
 export default class ClassificationService
-  implements Service<Score[], Contempled[]> {
-  execute(request?: Score[]): Contempled[] | Promise<Contempled[]> {
+  implements IService<Family[], Classified[]> {
+  private mapFamilyToScoreService: MapFamilyToScoreService;
+  private mapScoreToClassifiedService: MapScoreToClassifiedService;
+
+  constructor() {
+    this.mapFamilyToScoreService = new MapFamilyToScoreService();
+    this.mapScoreToClassifiedService = new MapScoreToClassifiedService();
+  }
+  execute(request: Family[]): Classified[] | Promise<Classified[]> {
     if (!request) {
-      throw new Error('Score is missing on Classificator');
+      throw new Error('Family body is incorrect for Pontuation Service');
     }
-    return request.map((score: Score) => {
-      let criteriaAttended = 3;
 
-      score.totalProposerScore === 0 ? criteriaAttended-- : 0;
-      score.totalInboundScore === 0 ? criteriaAttended-- : 0;
-      score.totalDependentsScore === 0 ? criteriaAttended-- : 0;
+    const scores: Score[] = request.map((family: Family) =>
+      this.mapFamilyToScoreService.execute(family),
+    );
 
-      const selectionDate = new Date().toISOString();
-
-      const totalScore = score.totalDependentsScore;
-      score.totalInboundScore + score.totalProposerScore;
-
-      const { familyId } = score;
-
-      return {
-        criteriaAttended,
-        familyId,
-        selectionDate,
-        totalScore,
-      } as Contempled;
-    });
+    return scores.map((score: Score) =>
+      this.mapScoreToClassifiedService.execute(score),
+    );
   }
 }

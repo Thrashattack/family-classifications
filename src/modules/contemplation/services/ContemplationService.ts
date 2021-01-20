@@ -1,9 +1,9 @@
-import { Contempled } from '@shared/@types/types';
-import Service from '@shared/core/Service';
+import { Classified } from '@shared/@types/types';
+import IService from '@shared/core/IService';
 
-export default class ClassificationService
-  implements Service<Contempled, void> {
-  execute(request?: Contempled): void | Promise<void> {
+export default class ContemplationService
+  implements IService<Classified, void> {
+  execute(request?: Classified): void | Promise<void> {
     if (request)
       throw new Error(
         `Method not implemented. ${request.totalScore.toString()}`,

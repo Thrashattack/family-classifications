@@ -2,7 +2,7 @@ import express from 'express';
 
 import ContemplationService from '@modules/contemplation/services/ContemplationService';
 
-import { Contempled } from '@shared/@types/types';
+import { Classified } from '@shared/@types/types';
 import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentication';
 
 const contemplationRouter = express.Router();
@@ -10,18 +10,18 @@ const contemplationRouter = express.Router();
 contemplationRouter.use(ensureAuthentication);
 
 contemplationRouter.post(
-  '/classify',
+  '/contemplate',
   async (req, res): Promise<void> => {
     try {
-      const contempled = req.body as Contempled;
+      const classified = req.body as Classified;
 
-      const contempledResult = await new ContemplationService().execute(
-        contempled,
+      const contemplationResult = await new ContemplationService().execute(
+        classified,
       );
 
-      res.json(contempledResult);
+      res.json(contemplationResult);
     } catch (error) {
-      res.json(new Error('Internal Server Error'));
+      res.json({ error: (error as Error).message });
     }
   },
 );

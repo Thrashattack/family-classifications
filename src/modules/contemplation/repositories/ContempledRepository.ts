@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ContempledModel from '@modules/contemplation/infra/postgres/models/Contempled';
 
-import Repository from '@shared/core/Repository';
+import IRepository from '@shared/core/IRepository';
 
 export default class ContempledRepository
-  implements Repository<ContempledModel, number> {
+  implements IRepository<ContempledModel, number> {
   findAll(page?: number, size?: number): ContempledModel[] {
     throw new Error('Method not implemented.');
   }

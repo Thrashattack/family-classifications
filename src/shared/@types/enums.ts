@@ -10,3 +10,9 @@ export enum FamilyMember {
   'Cônjugue',
   'Dependente',
 }
+
+export enum RulesServices {
+  'AGE',
+  'INBOUND',
+  'DEPENDENTS',
+}
