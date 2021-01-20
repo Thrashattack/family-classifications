@@ -4,16 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const auth_1 = __importDefault(require("@config/auth"));
-const TokenExpiredError_1 = __importDefault(require("@shared/errors/TokenExpiredError"));
+const auth_1 = __importDefault(require("../../../../config/auth"));
+const TokenExpiredError_1 = __importDefault(require("../../../errors/TokenExpiredError"));
 function ensureAuthenticated(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        throw new Error('JWT token is missing.');
+        throw new Error('Auth Token Is Missin.');
     }
     const [, token] = authHeader.split(' ');
     try {
-        jsonwebtoken_1.default.verify(token, auth_1.default.secret);
+        const user = jsonwebtoken_1.default.verify(token, auth_1.default.secret);
+        req.app.set('username', user.login);
         return next();
     }
     catch (_a) {

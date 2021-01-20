@@ -8,9 +8,17 @@ export type FamilyStatusType = 0 | 1 | 2 | 3 | '0' | '1' | '2' | '3';
 
 export type RuleFn = (n: number) => boolean;
 
-export type RuleLevel = stdProperty | RuleFn;
+export type RuleValue = number | RuleFn;
 
-export type RulesEntries = [string, Record<string, number | RuleFn>][];
+export type RuleLevel = {
+  max: Rule;
+  med: Rule;
+  min: Rule;
+  defaults: Rule;
+};
+export type RuleScope = Map<string, RuleLevel>;
+
+export type Rule = Map<string, RuleValue>;
 
 export type Classified = {
   familyId: string;
@@ -53,15 +61,8 @@ export type Family = {
   status: FamilyStatusType;
 };
 
-export type Rule = {
-  max: RuleLevel;
-  med: RuleLevel;
-  min: RuleLevel;
-  default: RuleLevel;
-};
-
 export type PontuationServiceType = {
-  rule: 0 | 1 | 2;
+  targetRule: 0 | 1 | 2;
   value: number;
 };
 

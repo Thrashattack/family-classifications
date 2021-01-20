@@ -13,6 +13,5 @@ services:
     networks:
       - classificator-network
     container_name: classificator-api
-    command: yarn dev
     ports:
       - 8080:8080

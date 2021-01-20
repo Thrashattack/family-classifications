@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '@config/auth';
 
 import TokenExpiredError from '@shared/errors/TokenExpiredError';
-import { User } from '@shared/@types/types';
+import { User } from '@common-types/types';
 
 export default function ensureAuthenticated(
   req: Request,

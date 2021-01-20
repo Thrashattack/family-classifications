@@ -1,13 +1,12 @@
-import { stdProperty } from '@shared/@types/types';
-
-const rulesArray = ['age', 'inbounds', 'dependents'];
+import { stdProperty } from '@common-types/types';
+import { RulesServices } from '@common-types/enums';
 
 const rulesConfig: Record<
   string,
   Record<string, Record<string, number | stdProperty>>
 > = {};
 
-for (const ruleName of rulesArray) {
+for (const ruleName in RulesServices) {
   rulesConfig[ruleName] = {
     max: {
       score: Number(process.env[`${ruleName.toUpperCase()}_MAX_SCORE`]) || 0,
@@ -40,4 +39,4 @@ for (const ruleName of rulesArray) {
     },
   };
 }
-export { rulesConfig, rulesArray };
+export { rulesConfig };

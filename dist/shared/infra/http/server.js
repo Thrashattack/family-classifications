@@ -19,9 +19,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Promise.resolve().then(() => __importStar(require('./app'))).then(app => {
+    const port = process.env.PORT || 3333;
     app.default.listen(process.env.PORT || 3333, () => {
-        console.log('⚡️ Server listening on http://localhost:3333');
+        console.log(`⚡️ Server listening on http://localhost:${port}`);
     });
-}).catch(err => {
+})
+    .catch(err => {
     console.log(err);
 });

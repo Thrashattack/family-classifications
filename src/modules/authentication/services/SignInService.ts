@@ -1,25 +1,25 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import authConfig from '@config/auth';
-import { Authentication, User } from '@shared/@types/types';
+import { Authentication, User } from '@common-types/types';
 import IService from '@shared/core/IService';
 import UserRepository from '../repositories/UsersRepository';
 
 export default class SignInService
-  implements IService<User, Promise<Authentication | Error>> {
+  implements IService<User, Promise<Authentication>> {
   private userRepository: UserRepository;
   constructor() {
     this.userRepository = new UserRepository();
   }
-  async execute(request: User): Promise<Authentication | Error> {
+  async execute(request: User): Promise<Authentication> {
     const { login, password } = request;
 
-    const user = await this.userRepository.findOne(login);
+    const user: User = await this.userRepository.findOne(login);
 
     const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
     if (!user || !isPasswordCorrect) {
-      return new Error('User or Password is Incorrect');
+      throw new Error('User or Password is Incorrect');
     }
 
     return {

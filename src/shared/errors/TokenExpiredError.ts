@@ -1,4 +1,4 @@
-import { stdClass } from '@shared/@types/types';
+import { stdClass } from '@common-types/types';
 
 export default class TokenExpiredError {
   public message: string;

@@ -18,7 +18,7 @@ export default class UserRepository implements IRepository<UserModel, string> {
     });
   }
   saveOne(_entity: UserModel): Promise<UserModel> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(_entity);
   }
   saveAll(_entities: UserModel[]): Promise<UserModel>[] {
     throw new Error('Method not implemented.');

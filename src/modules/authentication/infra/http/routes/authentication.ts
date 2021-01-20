@@ -4,7 +4,7 @@ import SignInService from '@modules/authentication/services/SignInService';
 
 import SignUpService from '@modules/authentication/services/SignUpService';
 
-import { User } from '@shared/@types/types';
+import { User, Authentication } from '@common-types/types';
 
 const authenticationRouter = express.Router();
 
@@ -14,7 +14,9 @@ authenticationRouter.post(
     try {
       const user: User = req.body as User;
 
-      const signInResult = await new SignInService().execute(user);
+      const signInResult: Authentication = await new SignInService().execute(
+        user,
+      );
 
       res.json(signInResult);
     } catch (error) {
@@ -29,7 +31,9 @@ authenticationRouter.post(
     try {
       const user: User = req.body as User;
 
-      const signUpResult = await new SignUpService().execute(user);
+      const signUpResult: Authentication = await new SignUpService().execute(
+        user,
+      );
 
       res.json(signUpResult);
     } catch (error) {

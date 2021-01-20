@@ -1,4 +1,4 @@
-import { Score, Family, Classified } from '@shared/@types/types';
+import { Score, Family, Classified } from '@common-types/types';
 
 import IService from '@shared/core/IService';
 

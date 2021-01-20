@@ -12,7 +12,7 @@ export enum FamilyMember {
 }
 
 export enum RulesServices {
-  'AGE',
-  'INBOUND',
-  'DEPENDENTS',
+  'age',
+  'dependents',
+  'inbounds',
 }

@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const ClassificationService_1 = __importDefault(require("@modules/classification/services/ClassificationService"));
-const ensureAuthentication_1 = __importDefault(require("@shared/infra/http/middlewares/ensureAuthentication"));
+const ClassificationService_1 = __importDefault(require("../../../services/ClassificationService"));
+const ensureAuthentication_1 = __importDefault(require("../../../../../shared/infra/http/middlewares/ensureAuthentication"));
 const classificationRouter = express_1.default.Router();
 classificationRouter.use(ensureAuthentication_1.default);
 classificationRouter.post('/classify', async (req, res) => {
@@ -15,7 +15,7 @@ classificationRouter.post('/classify', async (req, res) => {
         res.json(classificationResult);
     }
     catch (error) {
-        res.json(new Error('Internal Server Error'));
+        res.json({ error: error.message });
     }
 });
 exports.default = classificationRouter;

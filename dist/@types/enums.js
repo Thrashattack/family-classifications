@@ -16,7 +16,7 @@ var FamilyMember;
 })(FamilyMember = exports.FamilyMember || (exports.FamilyMember = {}));
 var RulesServices;
 (function (RulesServices) {
-    RulesServices[RulesServices["AGE"] = 0] = "AGE";
-    RulesServices[RulesServices["INBOUND"] = 1] = "INBOUND";
-    RulesServices[RulesServices["DEPENDENTS"] = 2] = "DEPENDENTS";
+    RulesServices[RulesServices["age"] = 0] = "age";
+    RulesServices[RulesServices["dependents"] = 1] = "dependents";
+    RulesServices[RulesServices["inbounds"] = 2] = "inbounds";
 })(RulesServices = exports.RulesServices || (exports.RulesServices = {}));

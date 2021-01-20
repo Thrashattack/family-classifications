@@ -12,6 +12,6 @@ const app = express_1.default();
 app.use(express_1.default.json({
     limit: '100MB',
 }), cors_1.default({
-    exposedHeaders: ['X-maybe-a-cache-header', 'X-and-a-balancer-one'],
+    exposedHeaders: ['X-USE-CACHE'],
 }), v1_1.default);
 exports.default = app;

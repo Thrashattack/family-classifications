@@ -1,4 +1,4 @@
-import { Classified } from '@shared/@types/types';
+import { Classified } from '@common-types/types';
 import IService from '@shared/core/IService';
 
 export default class ContemplationService

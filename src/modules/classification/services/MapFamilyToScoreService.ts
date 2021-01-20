@@ -1,31 +1,24 @@
-import { RulesServices } from '@shared/@types/enums';
-import { Family, Score } from '@shared/@types/types';
-import ICachedService from '@shared/core/ICachedService';
+import { RulesServices } from '@common-types/enums';
+import { Family, Score } from '@common-types/types';
 import IService from '@shared/core/IService';
 import GetFamilyInfoService from './GetFamilyInfoService';
 import PontuationService from './PontuationService';
-import Cache from '@shared/infra/singletons/Cache';
+import Cache from '@shared/singletons/Cache';
 
 export default class MapFamilyToScoreService
-  implements IService<Family, Score>, ICachedService<Family, Score> {
+  implements IService<Family, Score> {
   private getFamilyInfoService: GetFamilyInfoService;
   private pontuationService: PontuationService;
+  private cache: Cache<Family, Score>;
 
   constructor() {
     this.getFamilyInfoService = new GetFamilyInfoService();
     this.pontuationService = new PontuationService();
-  }
-
-  setInCache(key: Family, value: Score): void | null {
-    return Cache.getInstance<Family, Score>().set(key, value);
-  }
-
-  getFromCache(key: Family): Score | null {
-    return Cache.getInstance<Family, Score>().get(key);
+    this.cache = Cache.getInstance();
   }
 
   execute(request: Family): Score {
-    const scoreFromCache = this.getFromCache(request);
+    const scoreFromCache = this.cache.getFromCache(request);
 
     if (scoreFromCache) return scoreFromCache;
 
@@ -37,21 +30,24 @@ export default class MapFamilyToScoreService
       familyId: request.id,
       scores: {
         proposerAgeScore: this.pontuationService.execute({
-          rule: RulesServices.AGE,
+          targetRule: RulesServices.age,
           value: age,
         }),
         inboundScore: this.pontuationService.execute({
-          rule: RulesServices.INBOUND,
+          targetRule: RulesServices.inbounds,
           value: inbounds,
         }),
         dependentsScore: this.pontuationService.execute({
-          rule: RulesServices.DEPENDENTS,
+          targetRule: RulesServices.dependents,
           value: dependents,
         }),
       },
     };
 
-    this.setInCache(request, score);
+    if (!score)
+      throw new Error("Couldn't calculate the score in the family body");
+
+      this.cache.setInCache(request, score);
 
     return score;
   }

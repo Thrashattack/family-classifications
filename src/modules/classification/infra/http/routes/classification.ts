@@ -2,7 +2,7 @@ import express from 'express';
 
 import ClassificationService from '@modules/classification/services/ClassificationService';
 
-import { Family } from '@shared/@types/types';
+import { Family } from '@common-types/types';
 import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentication';
 
 const classificationRouter = express.Router();
