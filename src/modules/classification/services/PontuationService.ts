@@ -1,5 +1,5 @@
-import { RulesServices } from '@common-types/enums';
-import { RuleFn, PontuationServiceType, RuleLevel } from '@common-types/types';
+import { RulesServices, RuleFn, Rule } from '@common-types/Rules';
+import { PontuationServiceType } from '@common-types/Classification';
 import IService from '@shared/core/IService';
 import RulesService from './RulesService';
 
@@ -12,7 +12,7 @@ export default class PontuationService
   execute(request: PontuationServiceType): number {
     const { targetRule, value } = request;
 
-    const choosenRule: RuleLevel = this.rulesService.execute(
+    const choosenRule: Rule = this.rulesService.execute(
       RulesServices[targetRule],
     );
 
@@ -21,9 +21,9 @@ export default class PontuationService
 
     let points = 0;
 
-    for (const [, rule] of Object.entries(choosenRule))
-      if ((rule.get('rule') as RuleFn)(value))
-        points = rule.get('score') as number;
+    for (const [, description] of Object.entries(choosenRule))
+      if ((description.get('rule') as RuleFn)(value))
+        points = description.get('score') as number;
 
     return points;
   }

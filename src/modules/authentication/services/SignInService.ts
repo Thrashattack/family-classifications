@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import authConfig from '@config/auth';
-import { Authentication, User } from '@common-types/types';
+import { Authentication, User } from '@common-types/Basics';
 import IService from '@shared/core/IService';
 import UserRepository from '../repositories/UsersRepository';
 

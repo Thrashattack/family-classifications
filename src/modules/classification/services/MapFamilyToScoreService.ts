@@ -1,20 +1,22 @@
-import { RulesServices } from '@common-types/enums';
-import { Family, Score } from '@common-types/types';
+import { RulesServices } from '@common-types/Rules';
+import { Family } from '@common-types/Family';
+import { Score } from '@common-types/Classification';
 import IService from '@shared/core/IService';
 import GetFamilyInfoService from './GetFamilyInfoService';
 import PontuationService from './PontuationService';
-import Cache from '@shared/singletons/Cache';
+import ICache from '@shared/core/ICache';
+import SingletonCache from '@shared/singletons/Cache';
 
 export default class MapFamilyToScoreService
   implements IService<Family, Score> {
   private getFamilyInfoService: GetFamilyInfoService;
   private pontuationService: PontuationService;
-  private cache: Cache<Family, Score>;
+  private cache: ICache<Family, Score>;
 
   constructor() {
     this.getFamilyInfoService = new GetFamilyInfoService();
     this.pontuationService = new PontuationService();
-    this.cache = Cache.getInstance();
+    this.cache = SingletonCache.getInstance<Family, Score>();
   }
 
   execute(request: Family): Score {
@@ -47,7 +49,7 @@ export default class MapFamilyToScoreService
     if (!score)
       throw new Error("Couldn't calculate the score in the family body");
 
-      this.cache.setInCache(request, score);
+    this.cache.setInCache(request, score);
 
     return score;
   }

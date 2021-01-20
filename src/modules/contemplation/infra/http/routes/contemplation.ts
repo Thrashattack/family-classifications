@@ -2,7 +2,7 @@ import express from 'express';
 
 import ContemplationService from '@modules/contemplation/services/ContemplationService';
 
-import { Classified } from '@common-types/types';
+import { Classified } from '@common-types/Basics';
 import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentication';
 
 const contemplationRouter = express.Router();

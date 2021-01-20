@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '@config/auth';
 
 import TokenExpiredError from '@shared/errors/TokenExpiredError';
-import { User } from '@common-types/types';
+import { User } from '@common-types/Authentication';
 
 export default function ensureAuthenticated(
   req: Request,
@@ -15,7 +15,7 @@ export default function ensureAuthenticated(
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('Auth Token Is Missin.');
+    throw new Error('Auth Token Is Missing.');
   }
 
   const [, token] = authHeader.split(' ');

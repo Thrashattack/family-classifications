@@ -1,4 +1,4 @@
-export default interface ICache<T, K> {
-  getFromCache(key: T): K | null;
-  setInCache(key: T, value: K): void | null;
+export default interface ICache<K, T> {
+  getFromCache(key: K): T | null;
+  setInCache(key: K, value: T): void | null;
 }

@@ -4,7 +4,7 @@ import SignInService from '@modules/authentication/services/SignInService';
 
 import SignUpService from '@modules/authentication/services/SignUpService';
 
-import { User, Authentication } from '@common-types/types';
+import { User, Authentication } from '@common-types/Basics';
 
 const authenticationRouter = express.Router();
 

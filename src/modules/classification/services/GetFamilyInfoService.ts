@@ -1,5 +1,10 @@
-import { FamilyMember } from '@common-types/enums';
-import { Family, FamilyInfo, Inbound, People } from '@common-types/types';
+import {
+  FamilyMember,
+  Family,
+  FamilyInfo,
+  Inbound,
+  People,
+} from '@common-types/Family';
 
 import IService from '@shared/core/IService';
 import Utils from '@shared/singletons/Utils';

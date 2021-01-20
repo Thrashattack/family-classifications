@@ -1,4 +1,4 @@
-import { stdProperty } from '@common-types/types';
+import { stdProperty } from '@common-types/Basics';
 import { RulesServices } from '@common-types/enums';
 
 const rulesConfig: Record<

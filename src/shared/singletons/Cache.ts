@@ -30,11 +30,10 @@ export default class Cache<K, T> implements ICache<K, T> {
     }
   }
 
-  public static getInstance<K, T>(): Cache<K, T> {
+  static getInstance<K, T>(): Cache<K, T> {
     if (!Cache.instance) {
       Cache.instance = new Cache<K, T>();
     }
     return Cache.instance as Cache<K, T>;
   }
-
 }
