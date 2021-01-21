@@ -16,7 +16,7 @@ export default {
       format: format.combine(format.colorize(), format.simple()),
       transports: [
         new transports.Console({
-          level: 'info',
+          level: process.env.LOG_LEVEL || 'info',
         }),
       ],
     },

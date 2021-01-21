@@ -1,28 +1,28 @@
 import { Classified, Score } from '@common-types/Classification';
 import ICache from '@shared/core/ICache';
-import IService from '@shared/core/IService';
+import IProvider from '@shared/core/IProvider';
 import SingletonCache from '@shared/singletons/Cache';
 
-export default class MapScoreToClassifiedService
-  implements IService<Score, Classified> {
+export default class ClassificationProvider
+  implements IProvider<Score, Classified> {
   private cache: ICache<Score, Classified>;
   constructor() {
     this.cache = SingletonCache.getInstance<Score, Classified>();
   }
-  execute(request: Score): Classified {
-    const classifiedFromCache = this.cache.getFromCache(request);
+  provide(score: Score): Classified {
+    const classifiedFromCache = this.cache.getFromCache(score);
 
     if (classifiedFromCache) return classifiedFromCache;
 
-    const { familyId } = request;
+    const { familyId } = score;
 
     const selectionDate = new Date().toISOString();
 
-    let criteriaAttended = Object.keys(request.scores).length;
+    let criteriaAttended = Object.keys(score.scores).length;
 
     let totalScore = 0;
 
-    for (const value of Object.values(request.scores))
+    for (const value of Object.values(score.scores))
       value === 0 ? criteriaAttended-- : (totalScore += value);
 
     const classified: Classified = {
@@ -37,7 +37,7 @@ export default class MapScoreToClassifiedService
         "Couldn't calculate the classification in the family body",
       );
 
-    this.cache.setInCache(request, classified);
+    this.cache.setInCache(score, classified);
 
     return classified;
   }

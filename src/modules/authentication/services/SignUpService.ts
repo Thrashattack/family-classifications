@@ -1,34 +1,32 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import authConfig from '@config/auth';
-import { Authentication, User } from '@common-types/Basics';
+import UserRepository from '@modules/authentication/repositories/UsersRepository';
+import PasswordProvider from '@modules/authentication/providers/PasswordProvider';
+import TokenProvider from '@modules/authentication/providers/TokenProvider';
+
+import IProvider from '@shared/core/IProvider';
 import IService from '@shared/core/IService';
-import UserRepository from '../repositories/UsersRepository';
+
+import { Authentication, User } from '@common-types/Authentication';
 
 export default class SignUpService
   implements IService<User, Promise<Authentication>> {
-  private userRepository: UserRepository;
+  private UserRepository: UserRepository;
+  private PasswordProvider: IProvider<string, string>;
+  private TokenProvider: IProvider<User, Authentication>;
+
   constructor() {
-    this.userRepository = new UserRepository();
+    this.UserRepository = new UserRepository();
+    this.PasswordProvider = new PasswordProvider();
+    this.TokenProvider = new TokenProvider();
   }
-  async execute(request: User): Promise<Authentication> {
-    const user = await this.userRepository.saveOne(request);
+  async execute(newUser: User): Promise<Authentication> {
+    const user = await this.UserRepository.saveOne(newUser);
 
     if (!user) {
       throw new Error('Failed to create new user');
     }
 
-    user.password = bcrypt.hashSync(request.password, authConfig.salt);
+    user.password = this.PasswordProvider.provide(newUser.password) as string;
 
-    return {
-      token: jwt.sign(user, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-      expires: new Date(
-        new Date().setDate(
-          new Date().getDate() + Number(authConfig.expiresIn.charAt(0)),
-        ),
-      ),
-    };
+    return this.TokenProvider.provide(user);
   }
 }
