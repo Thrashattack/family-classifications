@@ -6,7 +6,7 @@ import IController from '@shared/core/IController';
 
 export default class ClassificationController
   implements IController<Request, Response> {
-  async post(req: Request, res: Response): Promise<Response> {
+  post = async (req: Request, res: Response): Promise<Response> => {
     try {
       const families = req.body as Family[];
 
@@ -19,16 +19,16 @@ export default class ClassificationController
       return res.json({ error: (error as Error).message });
     }
   }
-  put(req: Request, res: Response): Promise<Response> {
+  put = (req: Request, res: Response): Promise<Response> => {
     throw new Error('Method not implemented.');
   }
-  get(req: Request, res: Response): Promise<Response> {
+  get = (req: Request, res: Response): Promise<Response> => {
     throw new Error('Method not implemented.');
   }
-  patch(req: Request, res: Response): Promise<Response> {
+  patch = (req: Request, res: Response): Promise<Response> => {
     throw new Error('Method not implemented.');
   }
-  delete(req: Request, res: Response): Promise<Response> {
+  delete = (req: Request, res: Response): Promise<Response> => {
     throw new Error('Method not implemented.');
   }
 }

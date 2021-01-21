@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 
 export default class AuthenticationController
   implements IController<Request, Response> {
-  async post(req: Request, res: Response): Promise<Response> {
+  post = async (req: Request, res: Response): Promise<Response> => {
     try {
       const user = req.body as User;
 
@@ -19,7 +19,7 @@ export default class AuthenticationController
       return res.json({ error: (error as Error).message });
     }
   }
-  async put(req: Request, res: Response): Promise<Response> {
+  put = async(req: Request, res: Response): Promise<Response> => {
     try {
       const user: User = req.body as User;
 

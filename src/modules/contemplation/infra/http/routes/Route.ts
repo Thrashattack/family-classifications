@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { IRouter, Router } from 'express';
 
 import ContemplationController from '@modules/contemplation/infra/http/controllers/ContemplationController';
 
@@ -6,14 +6,15 @@ import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentic
 import IRoute from '@shared/core/IRoute';
 
 
-class Route implements IRoute<Router, ContemplationController>{
+class Route implements IRoute<IRouter, ContemplationController>{
 
-  router = Router();
-  controller = new ContemplationController();
+  router: IRouter;
+  controller: ContemplationController;
 
   constructor() {
-    this.router.use(ensureAuthentication)
-    this.router.post('/contemplate', this.controller.post.bind(this.router));
+    this.router = Router()
+      .use(ensureAuthentication)
+      .post('/contemplate', this.controller.post);
   }
 }
 

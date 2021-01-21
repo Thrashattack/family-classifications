@@ -5,7 +5,7 @@ import IController from "@shared/core/IController";
 import { Request, Response} from 'express';
 
 export default class ContemplationController implements IController<Request, Response> {
-    async post(req: Request, res: Response): Promise<Response> {
+    post = async (req: Request, res: Response): Promise<Response> => {
         try {
             const classified = req.body as Classified;
       
