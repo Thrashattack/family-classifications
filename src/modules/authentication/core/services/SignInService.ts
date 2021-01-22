@@ -1,9 +1,10 @@
-import { Authentication, User } from '@common-types/Authentication';
+import UserRepository from '@modules/authentication/core/repositories/UsersRepository';
+import PasswordProvider from '@modules/authentication/core/providers/PasswordProvider';
+import TokenProvider from '@modules/authentication/core/providers/TokenProvider';
+
 import IService from '@shared/core/IService';
-import UserRepository from '../repositories/UsersRepository';
-import PasswordProvider from '../providers/PasswordProvider';
-import TokenProvider from '../providers/TokenProvider';
 import IProvider from '@shared/core/IProvider';
+import { Authentication, User } from '@common-types/Authentication';
 
 export default class SignInService
   implements IService<User, Promise<Authentication>> {

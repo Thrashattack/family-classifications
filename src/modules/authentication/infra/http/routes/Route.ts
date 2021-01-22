@@ -1,17 +1,7 @@
-import IRoute from '@shared/core/IRoute';
-import { Router, IRouter } from 'express';
+import { Router } from 'express';
 
-import AuthenticationController from '../controllers/AuthenticationController';
+import AuthenticationController from '@modules/authentication/infra/http/controllers/AuthenticationController';
 
-class Route implements IRoute<IRouter, AuthenticationController>{
-  router: IRouter;
-  controller = new AuthenticationController();
-
-  constructor() {
-    this.router = Router()
-      .post('/signin', this.controller.post)
-      .put('/signup', this.controller.put);
-  }
-}
-
-export default new Route().router;
+export default Router()
+  .post('/signin', new AuthenticationController().post)
+  .put('/signup', new AuthenticationController().put);

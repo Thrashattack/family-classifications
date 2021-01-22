@@ -1,0 +1,45 @@
+version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:latest
+  working_directory: ~/app
+  command: ln -s ~/$PROJECT_NAME ~/app
+
+jobs:
+  pull:
+    machine: true
+    steps:
+      - checkout
+      - run: ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/$PROJECT_NAME && git checkout main && git pull"
+  build:
+    machine: true
+    steps:      
+      - run ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/$PROJECT_NAME && docker rm -f $CONTAINER_NAME && yarn build
+  test:
+    machine: true
+    steps:      
+      - run: ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/$PROJECT_NAME && yarn test
+  deploy:
+    machine: true
+    steps:      
+      - run: ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/$PROJECT_NAME && docker rm -f $CONTAINER_NAME && docker-compose up --build -d"    
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - pull:    
+          filters:
+            branches:
+              only:
+                - main      
+      - build:
+          requires:
+            - pull
+      - test:
+          requires:
+            - build      
+      - deploy:
+          requires:
+            - test

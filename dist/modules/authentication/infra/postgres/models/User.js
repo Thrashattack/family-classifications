@@ -1,5 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class User {
-}
-exports.default = User;
+exports.__esModule = true;
+var User = /** @class */ (function () {
+    function User() {
+    }
+    return User;
+}());
+exports["default"] = User;

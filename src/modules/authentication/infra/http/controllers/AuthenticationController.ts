@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Authentication, User } from '@common-types/Authentication';
-import SignInService from '@modules/authentication/services/SignInService';
-import SignUpService from '@modules/authentication/services/SignUpService';
-import IController from '@shared/core/IController';
 import { Request, Response } from 'express';
+
+import SignInService from '@modules/authentication/core/services/SignInService';
+import SignUpService from '@modules/authentication/core/services/SignUpService';
+
+import IController from '@shared/core/IController';
+import { Authentication, User } from '@common-types/Authentication';
 
 export default class AuthenticationController
   implements IController<Request, Response> {
@@ -18,8 +20,8 @@ export default class AuthenticationController
     } catch (error) {
       return res.json({ error: (error as Error).message });
     }
-  }
-  put = async(req: Request, res: Response): Promise<Response> => {
+  };
+  put = async (req: Request, res: Response): Promise<Response> => {
     try {
       const user: User = req.body as User;
 
@@ -31,7 +33,7 @@ export default class AuthenticationController
     } catch (error) {
       return res.json({ error: (error as Error).message });
     }
-  }
+  };
   get(_req: Request, _res: Response): Promise<Response> {
     throw new Error('Method not implemented.');
   }

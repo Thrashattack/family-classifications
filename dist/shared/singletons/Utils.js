@@ -1,12 +1,15 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Utils {
-    static getAgeFromBirth(birthDateString) {
-        const t = new Date();
-        const b = new Date(birthDateString);
-        const m = t.getMonth() - b.getMonth();
-        let a = t.getFullYear() - b.getFullYear();
-        return m < 0 || (m === 0 && t.getDate() < b.getDate()) ? a-- : a;
+exports.__esModule = true;
+var Utils = /** @class */ (function () {
+    function Utils() {
     }
-}
-exports.default = Utils;
+    Utils.getAgeFromBirth = function (birthDateString) {
+        var t = new Date();
+        var b = new Date(birthDateString);
+        var m = t.getMonth() - b.getMonth();
+        var a = t.getFullYear() - b.getFullYear();
+        return m < 0 || (m === 0 && t.getDate() < b.getDate()) ? a-- : a;
+    };
+    return Utils;
+}());
+exports["default"] = Utils;

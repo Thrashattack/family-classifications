@@ -1,42 +1,32 @@
 import { stdProperty } from '@common-types/Basics';
-import { RuleCriterias } from '@common-types/Rules';
+export const RulesLevels = eval(
+  process.env.RULES_LEVELS as string,
+) as Array<string>;
+export const RulesCriterias = eval(
+  process.env.RULES_CRITERIAS as string,
+) as Array<string>;
 
 const rulesConfig: Record<
   string,
   Record<string, Record<string, number | stdProperty>>
 > = {};
 
-for (const ruleCriteria in RuleCriterias) {
-  rulesConfig[ruleCriteria] = {
-    max: {
-      score: Number(process.env[`${ruleCriteria.toUpperCase()}_MAX_SCORE`]) || 0,
-      rule: {
-        a: Number(process.env[`${ruleCriteria.toUpperCase()}_MAX_RULE_A`]) || 0,
-        b: Number(process.env[`${ruleCriteria.toUpperCase()}_MAX_RULE_B`]) || 0,
-      },
-    },
-    med: {
-      score: Number(process.env[`${ruleCriteria.toUpperCase()}_MED_SCORE`]) || 0,
-      rule: {
-        a: Number(process.env[`${ruleCriteria.toUpperCase()}_MED_RULE_A`]) || 0,
-        b: Number(process.env[`${ruleCriteria.toUpperCase()}_MED_RULE_B`]) || 0,
-      },
-    },
-    min: {
-      score: Number(process.env[`${ruleCriteria.toUpperCase()}_MIN_SCORE`]) || 0,
-      rule: {
-        a: Number(process.env[`${ruleCriteria.toUpperCase()}_MIN_RULE_A`]) || 0,
-        b: Number(process.env[`${ruleCriteria.toUpperCase()}_MIN_RULE_B`]) || 0,
-      },
-    },
-    default: {
-      score:
-        Number(process.env[`${ruleCriteria.toUpperCase()}_DEFAULT_SCORE`]) || 0,
-      rule: {
-        a: Number(process.env[`${ruleCriteria.toUpperCase()}_DEFAULT_RULE_A`]) || 0,
-        b: Number(process.env[`${ruleCriteria.toUpperCase()}_DEFAULT_RULE_B`]) || 0,
-      },
-    },
-  };
+for (const ruleCriteria of RulesCriterias) {
+  if (!isNaN(Number(ruleCriteria))) continue;
+  const criteria = ruleCriteria.toUpperCase();
+  rulesConfig[ruleCriteria] = {};
+  for (const ruleLevels of RulesLevels) {
+    if (!isNaN(Number(ruleLevels))) continue;
+    const level = ruleLevels.toUpperCase();
+
+    const rule: stdProperty = {
+      a: Number(process.env[`${criteria}_${level}_RULE_A`]) || 0,
+      b: Number(process.env[`${criteria}_${level}_RULE_B`]) || 0,
+    };
+
+    const score = Number(process.env[`${criteria}_${level}_SCORE`]) || 0;
+
+    rulesConfig[ruleCriteria][ruleLevels] = { score, rule };
+  }
 }
-export { rulesConfig };
+export default rulesConfig;

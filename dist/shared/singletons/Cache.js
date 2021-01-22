@@ -2,39 +2,38 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const auth_1 = __importDefault(require("../../config/auth"));
-class Cache {
-    constructor() {
+exports.__esModule = true;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var auth_1 = __importDefault(require("../../config/auth"));
+var Cache = /** @class */ (function () {
+    function Cache() {
         this.pool = {};
     }
-    static getInstance() {
+    Cache.prototype.getFromCache = function (key) {
+        try {
+            var index = jsonwebtoken_1["default"].sign(JSON.stringify(key), auth_1["default"].secret);
+            return JSON.parse(Buffer.from(this.pool[index]).toString('utf8'));
+        }
+        catch (err) {
+            return null;
+        }
+    };
+    Cache.prototype.setInCache = function (key, value) {
+        try {
+            var index = jsonwebtoken_1["default"].sign(JSON.stringify(key), auth_1["default"].secret);
+            var entry = JSON.stringify(value);
+            this.pool[index] = Buffer.from(entry);
+        }
+        catch (err) {
+            return null;
+        }
+    };
+    Cache.getInstance = function () {
         if (!Cache.instance) {
             Cache.instance = new Cache();
         }
         return Cache.instance;
-    }
-    get(key) {
-        console.info(this.pool);
-        try {
-            const index = jsonwebtoken_1.default.sign(JSON.stringify(key), auth_1.default.secret);
-            return JSON.parse(this.pool[index]);
-        }
-        catch (err) {
-            return null;
-        }
-    }
-    set(key, value) {
-        console.info(this.pool);
-        try {
-            const index = jsonwebtoken_1.default.sign(JSON.stringify(key), auth_1.default.secret);
-            const entry = JSON.stringify(value);
-            this.pool[index] = entry;
-        }
-        catch (err) {
-            return null;
-        }
-    }
-}
-exports.default = Cache;
+    };
+    return Cache;
+}());
+exports["default"] = Cache;

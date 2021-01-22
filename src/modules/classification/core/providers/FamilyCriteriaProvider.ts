@@ -1,19 +1,14 @@
-import {
-  FamilyMember,
-  Family,
-  FamilyInfo,
-  Inbound,
-  People,
-} from '@common-types/Family';
+import { stdProperty } from '@common-types/Basics';
+import { FamilyMember, Family, Inbound, People } from '@common-types/Family';
 
 import IProvider from '@shared/core/IProvider';
 import Utils from '@shared/singletons/Utils';
 
 export default class FamilyInfoProvider
-  implements IProvider<Family, FamilyInfo> {
-  provide(family: Family): FamilyInfo {
+  implements IProvider<Family, stdProperty> {
+  provide(family: Family): stdProperty {
     const proposer: People = family.peoples.filter(
-      (people: People) => people.type === FamilyMember.Pretendente,
+      (people: People) => people.type === FamilyMember.Proposer,
     )[0];
 
     if (!proposer) throw new Error('No proposer was found in the family body');
@@ -29,12 +24,11 @@ export default class FamilyInfoProvider
 
     const dependents = family.peoples.filter((dependent: People) => {
       const dependentAge = Utils.getAgeFromBirth(dependent.birthDate);
-      return dependentAge < 18;
+      const isDependent = dependent.type === FamilyMember.Dependent;
+
+      return dependentAge < 18 && isDependent;
     });
 
-    if (!dependents)
-      throw new Error("Couldn't get the dependents in the family body");
-
-    return { id: family.id, age, inbounds, dependents: dependents.length };
+    return { age, inbounds, dependents: dependents.length };
   }
 }

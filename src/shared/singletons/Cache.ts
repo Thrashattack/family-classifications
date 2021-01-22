@@ -6,7 +6,7 @@ import ICache from '@shared/core/ICache';
 export default class Cache<K, T> implements ICache<K, T> {
   private static instance: unknown;
 
-  private pool: Record<string, string>;
+  private pool: Record<string, ArrayBuffer>;
 
   private constructor() {
     this.pool = {};
@@ -15,7 +15,7 @@ export default class Cache<K, T> implements ICache<K, T> {
   public getFromCache(key: K): T | null {
     try {
       const index = jwt.sign(JSON.stringify(key), authConfig.secret);
-      return JSON.parse(this.pool[index]) as T;
+      return JSON.parse(Buffer.from(this.pool[index]).toString('utf8')) as T;
     } catch (err) {
       return null;
     }
@@ -24,7 +24,7 @@ export default class Cache<K, T> implements ICache<K, T> {
     try {
       const index = jwt.sign(JSON.stringify(key), authConfig.secret);
       const entry = JSON.stringify(value);
-      this.pool[index] = entry;
+      this.pool[index] = Buffer.from(entry);
     } catch (err) {
       return null;
     }

@@ -1,0 +1,19 @@
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.2
+version: 2.1
+workflows:
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: $AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+          aws-access-key-id: $AWS_ECR_ACCESS_KEY_ID_ENV_VAR_NAME
+          aws-secret-access-key: $AWS_ECR_SECRET_ACCESS_KEY_ENV_VAR_NAME
+          context: $AWS_ECR_CONTEXT
+          create-repo: true
+          no-output-timeout: 20m
+          workspace-root: ../
+          profile-name: $AWS_PROFILE_NAME
+          region: $AWS_REGION_ENV_VAR_NAME
+          repo: $AWS_ECR_REPOSITORY
+          skip-when-tags-exist: false
+          tag: 'latest,$AWS_ECR_REPOSITORY_TAG'

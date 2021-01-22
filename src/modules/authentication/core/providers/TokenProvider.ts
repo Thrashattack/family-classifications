@@ -5,15 +5,12 @@ import IProvider from '@shared/core/IProvider';
 import authConfig from '@config/auth';
 
 export default class TokenProvider implements IProvider<User, Authentication> {
-  provide(user?: User): Authentication | Promise<Authentication> {
+  provide(user: User): Authentication | Promise<Authentication> {
+    const { secret, expiresIn } = authConfig;
     return {
-      token: jwt.sign(JSON.stringify(user), authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
+      token: jwt.sign({ login: user.login }, secret, { expiresIn }),
       expires: new Date(
-        new Date().setDate(
-          new Date().getDate() + Number(authConfig.expiresIn.charAt(0)),
-        ),
+        new Date().setDate(new Date().getDate() + Number(expiresIn.charAt(0))),
       ),
     };
   }

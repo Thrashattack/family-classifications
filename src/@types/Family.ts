@@ -1,10 +1,3 @@
-export type FamilyInfo = {
-  id: string;
-  age: number;
-  inbounds: number;
-  dependents: number;
-};
-
 export type People = {
   id: string;
   name: string;
@@ -32,7 +25,7 @@ export enum FamilyStatus {
 }
 
 export enum FamilyMember {
-  'Pretendente',
-  'Cônjugue',
-  'Dependente',
+  'Proposer',
+  'Conjugate',
+  'Dependent',
 }

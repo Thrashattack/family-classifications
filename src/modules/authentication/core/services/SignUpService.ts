@@ -1,6 +1,6 @@
-import UserRepository from '@modules/authentication/repositories/UsersRepository';
-import PasswordProvider from '@modules/authentication/providers/PasswordProvider';
-import TokenProvider from '@modules/authentication/providers/TokenProvider';
+import UserRepository from '@modules/authentication/core/repositories/UsersRepository';
+import PasswordProvider from '@modules/authentication/core/providers/PasswordProvider';
+import TokenProvider from '@modules/authentication/core/providers/TokenProvider';
 
 import IProvider from '@shared/core/IProvider';
 import IService from '@shared/core/IService';

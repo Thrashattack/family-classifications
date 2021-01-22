@@ -1,38 +1,26 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.rulesConfig = void 0;
-const enums_1 = require("../@types/enums");
-const rulesConfig = {};
-exports.rulesConfig = rulesConfig;
-for (const ruleName in enums_1.RulesServices) {
-    rulesConfig[ruleName] = {
-        max: {
-            score: Number(process.env[`${ruleName.toUpperCase()}_MAX_SCORE`]) || 0,
-            rule: {
-                a: Number(process.env[`${ruleName.toUpperCase()}_MAX_RULE_A`]) || 0,
-                b: Number(process.env[`${ruleName.toUpperCase()}_MAX_RULE_B`]) || 0,
-            },
-        },
-        med: {
-            score: Number(process.env[`${ruleName.toUpperCase()}_MED_SCORE`]) || 0,
-            rule: {
-                a: Number(process.env[`${ruleName.toUpperCase()}_MED_RULE_A`]) || 0,
-                b: Number(process.env[`${ruleName.toUpperCase()}_MED_RULE_B`]) || 0,
-            },
-        },
-        min: {
-            score: Number(process.env[`${ruleName.toUpperCase()}_MIN_SCORE`]) || 0,
-            rule: {
-                a: Number(process.env[`${ruleName.toUpperCase()}_MIN_RULE_A`]) || 0,
-                b: Number(process.env[`${ruleName.toUpperCase()}_MIN_RULE_B`]) || 0,
-            },
-        },
-        default: {
-            score: Number(process.env[`${ruleName.toUpperCase()}_DEFAULT_SCORE`]) || 0,
-            rule: {
-                a: Number(process.env[`${ruleName.toUpperCase()}_DEFAULT_RULE_A`]) || 0,
-                b: Number(process.env[`${ruleName.toUpperCase()}_DEFAULT_RULE_B`]) || 0,
-            },
-        },
-    };
+exports.__esModule = true;
+exports.RulesCriterias = exports.RulesLevels = void 0;
+exports.RulesLevels = eval(process.env.RULES_LEVELS);
+exports.RulesCriterias = eval(process.env.RULES_CRITERIAS);
+var rulesConfig = {};
+for (var _i = 0, RulesCriterias_1 = exports.RulesCriterias; _i < RulesCriterias_1.length; _i++) {
+    var ruleCriteria = RulesCriterias_1[_i];
+    if (!isNaN(Number(ruleCriteria)))
+        continue;
+    var criteria = ruleCriteria.toUpperCase();
+    rulesConfig[ruleCriteria] = {};
+    for (var _a = 0, RulesLevels_1 = exports.RulesLevels; _a < RulesLevels_1.length; _a++) {
+        var ruleLevels = RulesLevels_1[_a];
+        if (!isNaN(Number(ruleLevels)))
+            continue;
+        var level = ruleLevels.toUpperCase();
+        var rule = {
+            a: Number(process.env[criteria + "_" + level + "_RULE_A"]) || 0,
+            b: Number(process.env[criteria + "_" + level + "_RULE_B"]) || 0
+        };
+        var score = Number(process.env[criteria + "_" + level + "_SCORE"]) || 0;
+        rulesConfig[ruleCriteria][ruleLevels] = { score: score, rule: rule };
+    }
 }
+exports["default"] = rulesConfig;

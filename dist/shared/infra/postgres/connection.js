@@ -1,6 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 function connect() {
     // TODO Create Connection
 }
-exports.default = connect;
+exports["default"] = connect;

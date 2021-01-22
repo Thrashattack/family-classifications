@@ -1,9 +1,12 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class ContemplationService {
-    execute(request) {
-        if (request)
-            throw new Error(`Method not implemented. ${request.totalScore.toString()}`);
+exports.__esModule = true;
+var ContemplationService = /** @class */ (function () {
+    function ContemplationService() {
     }
-}
-exports.default = ContemplationService;
+    ContemplationService.prototype.execute = function (request) {
+        if (request)
+            throw new Error("Method not implemented. " + request.totalScore.toString());
+    };
+    return ContemplationService;
+}());
+exports["default"] = ContemplationService;

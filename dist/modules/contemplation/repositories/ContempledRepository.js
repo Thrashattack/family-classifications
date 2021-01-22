@@ -1,29 +1,32 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class ContempledRepository {
-    findAll(page, size) {
-        throw new Error('Method not implemented.');
+exports.__esModule = true;
+var ContempledRepository = /** @class */ (function () {
+    function ContempledRepository() {
     }
-    findOne(id) {
+    ContempledRepository.prototype.findAll = function (page, size) {
         throw new Error('Method not implemented.');
-    }
-    saveOne(entity) {
+    };
+    ContempledRepository.prototype.findOne = function (id) {
         throw new Error('Method not implemented.');
-    }
-    saveAll(entities) {
+    };
+    ContempledRepository.prototype.saveOne = function (entity) {
         throw new Error('Method not implemented.');
-    }
-    updateOne(id, entity) {
+    };
+    ContempledRepository.prototype.saveAll = function (entities) {
         throw new Error('Method not implemented.');
-    }
-    updateAll(entities) {
+    };
+    ContempledRepository.prototype.updateOne = function (id, entity) {
         throw new Error('Method not implemented.');
-    }
-    deleteOne(id) {
+    };
+    ContempledRepository.prototype.updateAll = function (entities) {
         throw new Error('Method not implemented.');
-    }
-    deleteAll(ids) {
+    };
+    ContempledRepository.prototype.deleteOne = function (id) {
         throw new Error('Method not implemented.');
-    }
-}
-exports.default = ContempledRepository;
+    };
+    ContempledRepository.prototype.deleteAll = function (ids) {
+        throw new Error('Method not implemented.');
+    };
+    return ContempledRepository;
+}());
+exports["default"] = ContempledRepository;

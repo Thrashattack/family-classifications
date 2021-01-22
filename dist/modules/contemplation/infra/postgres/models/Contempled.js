@@ -1,5 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Contempled {
-}
-exports.default = Contempled;
+exports.__esModule = true;
+var Contempled = /** @class */ (function () {
+    function Contempled() {
+    }
+    return Contempled;
+}());
+exports["default"] = Contempled;

@@ -4,20 +4,18 @@ import jwt from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 
-import TokenExpiredError from '@shared/errors/TokenExpiredError';
 import { User } from '@common-types/Authentication';
 
 export default function ensureAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction,
-): void | Error {
+): Record<symbol, string | symbol> | void {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('Auth Token Is Missing.');
+    return res.status(401).json({ error: 'Auth Token is Missing' });
   }
-
   const [, token] = authHeader.split(' ');
 
   try {
@@ -25,6 +23,6 @@ export default function ensureAuthenticated(
     req.app.set('username', user.login);
     return next();
   } catch {
-    throw new TokenExpiredError('Invalid Auth Token');
+    return res.status(401).json({ error: 'Invalid Auth Token' });
   }
 }

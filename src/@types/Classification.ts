@@ -1,6 +1,7 @@
+import { stdProperty } from './Basics';
 import { Rule } from './Rules';
 
-export type Classified = {
+export type Classification = {
   familyId: string;
   criteriaAttended: number;
   totalScore: number;
@@ -9,11 +10,7 @@ export type Classified = {
 
 export type Score = {
   familyId: string;
-  scores: {
-    dependentsScore: number;
-    proposerAgeScore: number;
-    inboundScore: number;
-  };
+  scores: stdProperty;
 };
 
 export type ScoreProviderType = {

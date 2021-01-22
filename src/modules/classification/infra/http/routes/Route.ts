@@ -1,17 +1,9 @@
-import { IRouter, Router } from 'express';
+import { Router } from 'express';
+
+import ClassificationController from '@modules/classification/infra/http/controllers/ClassificationController';
+
 import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentication';
-import ClassificationController from '../controllers/ClassificationController';
-import IRoute from '@shared/core/IRoute';
 
-class Route implements IRoute<IRouter, ClassificationController> {
-  router: IRouter;
-  controller: ClassificationController;
-
- constructor(){
-    this.router = Router()
-      .use(ensureAuthentication)
-      .post('/classify', this.controller.post);
-  }
-}
-
-export default new Route().router;
+export default Router()
+  .use(ensureAuthentication)
+  .post('/classify', new ClassificationController().post);

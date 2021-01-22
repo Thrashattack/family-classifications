@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    secret: process.env.APP_SECRET || '',
-    expiresIn: '1d',
-    salt: 12,
+exports.__esModule = true;
+exports["default"] = {
+    secret: String(process.env.APP_SECRET) || '',
+    expiresIn: String(process.env.TOKEN_EXPIRES_IN) || '1d',
+    salt: Number(process.env.PASSWORD_SALT) || 12
 };
