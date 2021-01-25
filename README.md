@@ -120,7 +120,7 @@ As configurações do ambiente estão em .env.sample, renomeie para .env antes d
 
 - Esta API foi implementada com base no padrão DDD. Tendo em vista a possibilidade de expansão dos serviços dessa API, o uso de micro-services pode vir a ser viável. Porém para os módulos existentes atualmente não julguei necessário.
 
-# Descrição da Arquitetura 
+# Descrição da Estrutura 
 
 - O código fonte encontra-se na pasta `src`.
 - O diretório `@types` contem as definições de tipos e enumeradores utilizados em todos os módulos da API
@@ -130,7 +130,7 @@ As configurações do ambiente estão em .env.sample, renomeie para .env antes d
 
 # Authentication 
 
-- A API implementa uma autenticação por Json Web Token porém sem efetividade pois o endpoint `/auth/signup` irá devolver um token para qualquer usuário e senha informados. Servindo apenas de demonstração.
+- A API implementa uma autenticação por Json Web Token porém sem efetividade pois o endpoint `/auth` irá devolver um token para qualquer usuário e senha informados. Servindo apenas de demonstração.
 - Todavia, os endpoints que usam o middleware de autenticação irão requerer um token valido no header authorization, gerado pela API_SECRET definido no .env.
 - Domínio: `src/modules/authentication`
 - Configurações: `src/config/auth.ts`
