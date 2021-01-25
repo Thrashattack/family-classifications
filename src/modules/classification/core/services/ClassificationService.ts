@@ -30,15 +30,10 @@ export default class ClassificationService
   }
 
   execute(family: Family): Classification | Promise<Classification> {
-    
-    const familyFromCache = this.FamilyCache.getFromCache(
-      family.id,
-    ) as Family;
+    const familyFromCache = this.FamilyCache.getFromCache(family.id) as Family;
 
     if (familyFromCache === family)
-      return this.ClassificationCache.getFromCache(
-        family.id,
-      ) as Classification;    
+      return this.ClassificationCache.getFromCache(family.id) as Classification;
 
     const familyCriteria = this.FamilyCriteriaProvider.provide(family);
 
@@ -78,6 +73,5 @@ export default class ClassificationService
     this.ClassificationCache.setInCache(family.id, classification);
 
     return classification;
-    
   }
 }

@@ -23,13 +23,13 @@ export default class RulesService implements IProvider<void, Rules> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   provide(request: void): Rules {
-    for (const criteria of RulesCriterias) {      
+    for (const criteria of RulesCriterias) {
       if (!rulesConfig[criteria])
         throw new Error("Couldn't load the rule criteria");
 
       const rule: Rule = new Map<string, RuleFn>();
 
-      for (const level of RulesLevels) {        
+      for (const level of RulesLevels) {
         rule.set(level, this.ruleFnProvider(rulesConfig[criteria][level]));
       }
 

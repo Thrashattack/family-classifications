@@ -15,7 +15,6 @@ for (const ruleCriteria of RulesCriterias) {
   const criteria = ruleCriteria.toUpperCase();
   rulesConfig[ruleCriteria] = {};
   for (const ruleLevels of RulesLevels) {
-
     const level = ruleLevels.toUpperCase();
 
     const rule: stdProperty = {

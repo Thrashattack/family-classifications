@@ -3,8 +3,7 @@ import UserModel from '@modules/authentication/infra/postgres/models/User';
 
 import IRepository from '@shared/core/IRepository';
 
-export default class UserRepository
-  implements IRepository<UserModel, number> {
+export default class UserRepository implements IRepository<UserModel, number> {
   findAll(page?: number, size?: number): UserModel[] {
     throw new Error('Method not implemented.');
   }
@@ -14,7 +13,9 @@ export default class UserRepository
   }
 
   async saveOne(entity: UserModel): Promise<UserModel> {
-    return new Promise((resolve, reject) => entity ? resolve(entity) : reject(entity));
+    return new Promise((resolve, reject) =>
+      entity ? resolve(entity) : reject(entity),
+    );
   }
 
   saveAll(entities: UserModel[]): UserModel[] {
@@ -25,9 +26,7 @@ export default class UserRepository
     throw new Error('Method not implemented.');
   }
 
-  updateAll(
-    entities: { id: number; entity: UserModel }[],
-  ): UserModel[] {
+  updateAll(entities: { id: number; entity: UserModel }[]): UserModel[] {
     throw new Error('Method not implemented.');
   }
 
