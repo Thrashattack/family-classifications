@@ -150,7 +150,7 @@ As configurações do ambiente estão em .env.sample, renomeie para .env antes d
             - Implementa a interface compartilhada `IService` e define o método `execute` fazendo validações dos dados e consumindo os providers à partir dos dados de entrada
         - Providers
             - Implementam a interface compartilhada `IProvider` definindo o método `provide` para cada tipo de provenção necessária.
-
+- Foi utilizado uma interface de cache e uma implementação de cache em memória para exemplificar o uso do cache. É possível alterar a implementação utilizando Redis ou qualquer outra tecnologia de cache sem alterar o serviço.
 
 # Regras 
 
