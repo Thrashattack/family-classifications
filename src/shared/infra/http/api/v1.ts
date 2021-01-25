@@ -6,10 +6,10 @@ import authRoutes from '@modules/authentication/infra/http/routes/Route';
 
 const v1Router = Router();
 
-v1Router.use('/auth', authRoutes);
+v1Router.use(authRoutes);
 
-v1Router.use('/classification', classificationRoutes);
+v1Router.use(classificationRoutes);
 
-v1Router.use('/contemplation', contemplationRoutes);
+v1Router.use(contemplationRoutes);
 
 export default v1Router;

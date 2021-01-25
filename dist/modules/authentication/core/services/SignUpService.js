@@ -39,12 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+var UserRepository_1 = __importDefault(require("../../infra/postgres/repositories/UserRepository"));
 var PasswordProvider_1 = __importDefault(require("../providers/PasswordProvider"));
 var TokenProvider_1 = __importDefault(require("../providers/TokenProvider"));
+var Logger_1 = __importDefault(require("../../../../shared/singletons/Logger"));
 var SignUpService = /** @class */ (function () {
     function SignUpService() {
-        this.UserRepository = new UsersRepository_1["default"]();
+        this.UserRepository = new UserRepository_1["default"]();
         this.PasswordProvider = new PasswordProvider_1["default"]();
         this.TokenProvider = new TokenProvider_1["default"]();
     }
@@ -57,7 +58,7 @@ var SignUpService = /** @class */ (function () {
                     case 1:
                         user = _a.sent();
                         if (!user) {
-                            throw new Error('Failed to create new user');
+                            Logger_1["default"].emit('throw', 'Failed to create new user');
                         }
                         user.password = this.PasswordProvider.provide(newUser.password);
                         return [2 /*return*/, this.TokenProvider.provide(user)];

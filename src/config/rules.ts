@@ -12,11 +12,10 @@ const rulesConfig: Record<
 > = {};
 
 for (const ruleCriteria of RulesCriterias) {
-  if (!isNaN(Number(ruleCriteria))) continue;
   const criteria = ruleCriteria.toUpperCase();
   rulesConfig[ruleCriteria] = {};
   for (const ruleLevels of RulesLevels) {
-    if (!isNaN(Number(ruleLevels))) continue;
+
     const level = ruleLevels.toUpperCase();
 
     const rule: stdProperty = {

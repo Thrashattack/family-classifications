@@ -6,4 +6,4 @@ import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentic
 
 export default Router()
   .use(ensureAuthentication)
-  .post('/classify', new ClassificationController().post);
+  .post('/classification', new ClassificationController().post);

@@ -11,11 +11,10 @@ export default class RulesService implements IProvider<void, Rules> {
     description: Record<string, RuleValueType | stdProperty>,
   ): RuleFn {
     const score = description.score as RuleValueType;
-    const ruleA = (description.rule as stdProperty).a;
-    const ruleB = (description.rule as stdProperty).b;
+    const rule = description.rule as stdProperty;
 
     const ruleFunction = (value: RuleValueType): RuleValueType =>
-      value >= ruleA && value < ruleB ? score : 0;
+      value >= rule.a && value < rule.b ? score : 0;
 
     if (!ruleFunction) throw new Error("Couldn't load the rule level");
 
@@ -24,17 +23,13 @@ export default class RulesService implements IProvider<void, Rules> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   provide(request: void): Rules {
-    for (const criteria of RulesCriterias) {
-      if (!isNaN(Number(criteria))) continue;
-
+    for (const criteria of RulesCriterias) {      
       if (!rulesConfig[criteria])
         throw new Error("Couldn't load the rule criteria");
 
       const rule: Rule = new Map<string, RuleFn>();
 
-      for (const level of RulesLevels) {
-        if (!isNaN(Number(level))) continue;
-
+      for (const level of RulesLevels) {        
         rule.set(level, this.ruleFnProvider(rulesConfig[criteria][level]));
       }
 

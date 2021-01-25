@@ -8,4 +8,4 @@ var ContemplationController_1 = __importDefault(require("../controllers/Contempl
 var ensureAuthentication_1 = __importDefault(require("../../../../../shared/infra/http/middlewares/ensureAuthentication"));
 exports["default"] = express_1.Router()
     .use(ensureAuthentication_1["default"])
-    .post('/contemplate', new ContemplationController_1["default"]().post);
+    .post('/contemplation', new ContemplationController_1["default"]().post);

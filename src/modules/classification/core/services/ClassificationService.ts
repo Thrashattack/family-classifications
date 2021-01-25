@@ -5,7 +5,7 @@ import RulesProvider from '@modules/classification/core/providers/RulesProvider'
 import IService from '@shared/core/IService';
 
 import { Score, Classification } from '@common-types/Classification';
-import { Family, FamilyStatus } from '@common-types/Family';
+import { Family } from '@common-types/Family';
 import { stdProperty } from '@common-types/Basics';
 
 import { RulesLevels, RulesCriterias } from '@config/rules';
@@ -13,7 +13,7 @@ import { RulesLevels, RulesCriterias } from '@config/rules';
 import SingletonCache from '@shared/singletons/Cache';
 
 export default class ClassificationService
-  implements IService<Family[], Classification[] | Promise<Classification[]>> {
+  implements IService<Family, Classification | Promise<Classification>> {
   private ClassificationProvider: ClassificationProvider;
   private FamilyCriteriaProvider: FamilyCriteriaProvider;
   private RulesProvider: RulesProvider;
@@ -29,62 +29,55 @@ export default class ClassificationService
     this.ClassificationCache = SingletonCache.getInstance();
   }
 
-  execute(families: Family[]): Classification[] | Promise<Classification[]> {
-    return families.map((family: Family) => {
-      const familyFromCache = this.FamilyCache.getFromCache(
+  execute(family: Family): Classification | Promise<Classification> {
+    
+    const familyFromCache = this.FamilyCache.getFromCache(
+      family.id,
+    ) as Family;
+
+    if (familyFromCache === family)
+      return this.ClassificationCache.getFromCache(
         family.id,
-      ) as Family;
+      ) as Classification;    
 
-      if (familyFromCache === family)
-        return this.ClassificationCache.getFromCache(
-          family.id,
-        ) as Classification;
+    const familyCriteria = this.FamilyCriteriaProvider.provide(family);
 
-      if (family.status !== FamilyStatus.Valid_Registration)
-        throw new Error('Invalid Registration: ' + FamilyStatus[family.status]);
+    const rules = this.RulesProvider.provide();
 
-      const familyCriteria = this.FamilyCriteriaProvider.provide(family);
+    const scores: stdProperty = {};
 
-      const rules = this.RulesProvider.provide();
+    for (const criteria of RulesCriterias) {
+      scores[criteria] = 0;
 
-      const scores: stdProperty = {};
+      const rule = rules.get(criteria);
 
-      for (const criteria of RulesCriterias) {
-        if (!isNaN(Number(criteria))) continue;
+      if (!rule) throw new Error(`Can't get rule for this criteria`);
 
-        scores[criteria] = 0;
+      for (const level of RulesLevels) {
+        const fn = rule.get(level);
 
-        const rule = rules.get(criteria);
-
-        if (!rule) throw new Error(`Can't get rule for this criteria`);
-
-        for (const level of RulesLevels) {
-          if (!isNaN(Number(level))) continue;
-
-          const fn = rule.get(level);
-
-          if (!fn)
-            throw new Error(
-              "Classification Function isn't defined for this rule",
-            );
-          scores[criteria] += fn(familyCriteria[criteria]);
-        }
+        if (!fn)
+          throw new Error(
+            "Classification Function isn't defined for this rule",
+          );
+        scores[criteria] += fn(familyCriteria[criteria]);
       }
+    }
 
-      const score: Score = {
-        familyId: family.id,
-        scores: scores,
-      };
+    const score: Score = {
+      familyId: family.id,
+      scores: scores,
+    };
 
-      const classification = this.ClassificationProvider.provide(score);
+    const classification = this.ClassificationProvider.provide(score);
 
-      if (!classification) throw new Error("Couldn't classify this family");
+    if (!classification) throw new Error("Couldn't classify this family");
 
-      this.FamilyCache.setInCache(family.id, family);
+    this.FamilyCache.setInCache(family.id, family);
 
-      this.ClassificationCache.setInCache(family.id, classification);
+    this.ClassificationCache.setInCache(family.id, classification);
 
-      return classification;
-    });
+    return classification;
+    
   }
 }

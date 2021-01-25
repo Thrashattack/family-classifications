@@ -6,4 +6,4 @@ import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentic
 
 export default Router()
   .use(ensureAuthentication)
-  .post('/contemplate', new ContemplationController().post);
+  .post('/contemplation', new ContemplationController().post);

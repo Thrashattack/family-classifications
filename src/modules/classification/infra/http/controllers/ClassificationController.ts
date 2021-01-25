@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response } from 'express';
 import ClassificationService from '@modules/classification/core/services/ClassificationService';
-import { Family } from '@common-types/Family';
 import IController from '@shared/core/IController';
+import FamilyAdapter from '../adapters/FamilyAdapter';
 
 export default class ClassificationController
   implements IController<Request, Response> {
   post = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const families = req.body as Family[];
-
-      if (!families) {
-        throw new Error('Family body is incorrect');
-      }
+      const family = new FamilyAdapter().validate(req.body);
 
       const classificationResult = await new ClassificationService().execute(
-        families,
+        family,
       );
 
       return res.json(classificationResult);

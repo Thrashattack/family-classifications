@@ -11,10 +11,9 @@ var RulesService = /** @class */ (function () {
     }
     RulesService.prototype.ruleFnProvider = function (description) {
         var score = description.score;
-        var ruleA = description.rule.a;
-        var ruleB = description.rule.b;
+        var rule = description.rule;
         var ruleFunction = function (value) {
-            return value >= ruleA && value < ruleB ? score : 0;
+            return value >= rule.a && value < rule.b ? score : 0;
         };
         if (!ruleFunction)
             throw new Error("Couldn't load the rule level");
@@ -24,15 +23,11 @@ var RulesService = /** @class */ (function () {
     RulesService.prototype.provide = function (request) {
         for (var _i = 0, RulesCriterias_1 = rules_2.RulesCriterias; _i < RulesCriterias_1.length; _i++) {
             var criteria = RulesCriterias_1[_i];
-            if (!isNaN(Number(criteria)))
-                continue;
             if (!rules_1["default"][criteria])
                 throw new Error("Couldn't load the rule criteria");
             var rule = new Map();
             for (var _a = 0, RulesLevels_1 = rules_2.RulesLevels; _a < RulesLevels_1.length; _a++) {
                 var level = RulesLevels_1[_a];
-                if (!isNaN(Number(level)))
-                    continue;
                 rule.set(level, this.ruleFnProvider(rules_1["default"][criteria][level]));
             }
             this.rules.set(criteria, rule);

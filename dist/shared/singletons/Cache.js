@@ -12,7 +12,7 @@ var Cache = /** @class */ (function () {
     Cache.prototype.getFromCache = function (key) {
         try {
             var index = jsonwebtoken_1["default"].sign(JSON.stringify(key), auth_1["default"].secret);
-            return JSON.parse(Buffer.from(this.pool[index]).toString('utf8'));
+            return JSON.parse(this.pool[index]);
         }
         catch (err) {
             return null;
@@ -22,7 +22,7 @@ var Cache = /** @class */ (function () {
         try {
             var index = jsonwebtoken_1["default"].sign(JSON.stringify(key), auth_1["default"].secret);
             var entry = JSON.stringify(value);
-            this.pool[index] = Buffer.from(entry);
+            this.pool[index] = entry;
         }
         catch (err) {
             return null;

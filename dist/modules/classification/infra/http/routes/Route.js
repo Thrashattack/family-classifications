@@ -8,4 +8,4 @@ var ClassificationController_1 = __importDefault(require("../controllers/Classif
 var ensureAuthentication_1 = __importDefault(require("../../../../../shared/infra/http/middlewares/ensureAuthentication"));
 exports["default"] = express_1.Router()
     .use(ensureAuthentication_1["default"])
-    .post('/classify', new ClassificationController_1["default"]().post);
+    .post('/classification', new ClassificationController_1["default"]().post);

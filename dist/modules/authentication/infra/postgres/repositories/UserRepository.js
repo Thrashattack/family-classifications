@@ -35,46 +35,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-var ClassificationService_1 = __importDefault(require("../../../core/services/ClassificationService"));
-var FamilyAdapter_1 = __importDefault(require("../adapters/FamilyAdapter"));
-var ClassificationController = /** @class */ (function () {
-    function ClassificationController() {
-        var _this = this;
-        this.post = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var family, classificationResult, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        family = new FamilyAdapter_1["default"]().validate(req.body);
-                        return [4 /*yield*/, new ClassificationService_1["default"]().execute(family)];
-                    case 1:
-                        classificationResult = _a.sent();
-                        return [2 /*return*/, res.json(classificationResult)];
-                    case 2:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, res.json({ error: error_1.message })];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        }); };
-        this.put = function (req, res) {
-            throw new Error('Method not implemented.');
-        };
-        this.get = function (req, res) {
-            throw new Error('Method not implemented.');
-        };
-        this.patch = function (req, res) {
-            throw new Error('Method not implemented.');
-        };
-        this["delete"] = function (req, res) {
-            throw new Error('Method not implemented.');
-        };
+var UserRepository = /** @class */ (function () {
+    function UserRepository() {
     }
-    return ClassificationController;
+    UserRepository.prototype.findAll = function (page, size) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.findOne = function (id) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.saveOne = function (entity) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return entity ? resolve(entity) : reject(entity); })];
+            });
+        });
+    };
+    UserRepository.prototype.saveAll = function (entities) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.updateOne = function (id, entity) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.updateAll = function (entities) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.deleteOne = function (id) {
+        throw new Error('Method not implemented.');
+    };
+    UserRepository.prototype.deleteAll = function (ids) {
+        throw new Error('Method not implemented.');
+    };
+    return UserRepository;
 }());
-exports["default"] = ClassificationController;
+exports["default"] = UserRepository;

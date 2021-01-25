@@ -6,14 +6,10 @@ exports.RulesCriterias = eval(process.env.RULES_CRITERIAS);
 var rulesConfig = {};
 for (var _i = 0, RulesCriterias_1 = exports.RulesCriterias; _i < RulesCriterias_1.length; _i++) {
     var ruleCriteria = RulesCriterias_1[_i];
-    if (!isNaN(Number(ruleCriteria)))
-        continue;
     var criteria = ruleCriteria.toUpperCase();
     rulesConfig[ruleCriteria] = {};
     for (var _a = 0, RulesLevels_1 = exports.RulesLevels; _a < RulesLevels_1.length; _a++) {
         var ruleLevels = RulesLevels_1[_a];
-        if (!isNaN(Number(ruleLevels)))
-            continue;
         var level = ruleLevels.toUpperCase();
         var rule = {
             a: Number(process.env[criteria + "_" + level + "_RULE_A"]) || 0,

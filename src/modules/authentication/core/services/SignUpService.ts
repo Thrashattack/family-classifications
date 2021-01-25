@@ -1,4 +1,4 @@
-import UserRepository from '@modules/authentication/core/repositories/UsersRepository';
+import UserRepository from '@modules/authentication/infra/postgres/repositories/UserRepository';
 import PasswordProvider from '@modules/authentication/core/providers/PasswordProvider';
 import TokenProvider from '@modules/authentication/core/providers/TokenProvider';
 
@@ -6,6 +6,7 @@ import IProvider from '@shared/core/IProvider';
 import IService from '@shared/core/IService';
 
 import { Authentication, User } from '@common-types/Authentication';
+import Logger from '@shared/singletons/Logger';
 
 export default class SignUpService
   implements IService<User, Promise<Authentication>> {
@@ -22,7 +23,7 @@ export default class SignUpService
     const user = await this.UserRepository.saveOne(newUser);
 
     if (!user) {
-      throw new Error('Failed to create new user');
+      Logger.emit('throw', 'Failed to create new user');
     }
 
     user.password = this.PasswordProvider.provide(newUser.password) as string;
