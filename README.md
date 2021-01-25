@@ -1,12 +1,14 @@
 # Serviço de Classificação de Famílias - Digix
 
  - Node v12.3.1
- - ```shell yarn``` Instale as dependencias
- - ```shell yarn dev``` Builda e inicia o projeto
 
- - ```shell docker-compose up --build -d``` Execute com docker 
+ - ``` yarn ``` Instale as dependencias
 
-# Env 
+ - ``` yarn dev``` Builda e inicia o projeto
+
+ - ``` docker-compose up --build -d``` Execute com docker 
+
+# Environment 
 
 As configurações do ambiente estão em .env.sample, renomeie para .env antes de iniciar o projeto.
 
