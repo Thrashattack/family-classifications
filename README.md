@@ -14,27 +14,43 @@ As configurações do ambiente estão em .env.sample, renomeie para .env antes d
 
 - `/auth`
     - POST
-        - Body: ```{ "login": "admin", password: "123" }```
+        - Body: ```json
+                { "login": "admin", password: "123" }
+            ```
             - login: String
             - password: String
-        - Response: ```{ "error": "User or Password is Incorrect" } ```
+        - Response: ```json 
+                { "error": "User or Password is Incorrect" }
+            ```
     - PUT
-        - Body: ```{ "login": "admin", password: "123" }```
+        - Body: ```json 
+                { "login": "admin", password: "123" }
+            ```
             - login: String
             - password: String
-        - Response: ```{ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWF0IjoxNjExNjA2NjIyLCJleHAiOjE2MTE2OTMwMjJ9.w6yHgRha7K6Dir4grCwmwxn5Yb02iDBRpgaQZWDvnOQ", "expires": "2021-01-26T20:30:22.949Z" }``` 
+        - Response: ```json 
+                { "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWF0IjoxNjExNjA2NjIyLCJleHAiOjE2MTE2OTMwMjJ9.w6yHgRha7K6Dir4grCwmwxn5Yb02iDBRpgaQZWDvnOQ", "expires": "2021-01-26T20:30:22.949Z" }
+            ``` 
 
 - `/classification`
     - POST
-        - Header: ```["authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWF0IjoxNjExNjA2NjIyLCJleHAiOjE2MTE2OTMwMjJ9.w6yHgRha7K6Dir4grCwmwxn5Yb02iDBRpgaQZWDvnOQ"]```
-        - Body: ``` "id": "3dac7da3-d742-4e51-95f9-bbb37f522413", "peoples": [ { "id": "5e65eea1-aa72-407e-9a67-88045c07b5de", "name": "João","type": 0, "birthDate": "1989-12-30" }, { "id": "d467781a-8f06-45ba-be6f-879cf32a9f7e", "name": "Maria", "type": 1, "birthDate": "1989-12-30" }, { "id": "79820382-a181-42d2-bfae-6c012489e65e", "name": "José", "type": 2, "birthDate": "2015-12-30" }, { "id":  80fa071e-17fb-4b87-99db-a7db0bfc23c2", "name": "Angela", "type": 2, "birthDate": "2015-12-30" } ], "inbounds": [ { "peopleId": "5e65eea1-aa72-407e-9a67-88045c07b5de", "value": 1000 }, { "peopleId": "d467781a-8f06-45ba-be6f-879cf32a9f7e", "value": 950 } ], "status": 0 }```
+        - Header: ```json
+                ["authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWF0IjoxNjExNjA2NjIyLCJleHAiOjE2MTE2OTMwMjJ9.w6yHgRha7K6Dir4grCwmwxn5Yb02iDBRpgaQZWDvnOQ"]
+            ```
+        - Body: ```json 
+                    { "id": "3dac7da3-d742-4e51-95f9-bbb37f522413", "peoples": [ { "id": "5e65eea1-aa72-407e-9a67-88045c07b5de", "name": "João","type": 0, "birthDate": "1989-12-30" }, { "id": "d467781a-8f06-45ba-be6f-879cf32a9f7e", "name": "Maria", "type": 1, "birthDate": "1989-12-30" }, { "id": "79820382-a181-42d2-bfae-6c012489e65e", "name": "José", "type": 2, "birthDate": "2015-12-30" }, { "id":  80fa071e-17fb-4b87-99db-a7db0bfc23c2", "name": "Angela", "type": 2, "birthDate": "2015-12-30" } ], "inbounds": [ { "peopleId": "5e65eea1-aa72-407e-9a67-88045c07b5de", "value": 1000 }, { "peopleId": "d467781a-8f06-45ba-be6f-879cf32a9f7e", "value": 950 } ], "status": 0 }
+                ```
             - id: ```String```
             - peoples: ```[ { id: String, name: String, type: Integer in FamilyMemberType, birthDate: String } ]```
             - FamilyMemberType: ``` { 0: 'Proposer', 1: 'Conjugate', 2: 'Dependent' } ```
             - inbounds: ```[ { peopleId: String, value: Double } ]```
             - status: Integer in FamilyStatus
-            - FamilyStatus: ```{ 0: 'Valid_Registration', 1: 'Already_have_a_house', 2: 'Already_contempled_in_another_selecion', 3: 'Incomplete_registration' }```
-        - Response: ```{"criteriaAttended":3,"familyId":"3dac7da3-d742-4e51-95f9-bbb37f522413","selectionDate":"2021-01-25T20:33:35.831Z","totalScore":5}```
+            - FamilyStatus: ```json 
+                    { 0: 'Valid_Registration', 1: 'Already_have_a_house', 2: 'Already_contempled_in_another_selecion', 3: 'Incomplete_registration' }
+                ```
+        - Response: ```json 
+                {"criteriaAttended":3,"familyId":"3dac7da3-d742-4e51-95f9-bbb37f522413","selectionDate":"2021-01-25T20:33:35.831Z","totalScore":5}
+            ```
 
 
 # Apresentação 
